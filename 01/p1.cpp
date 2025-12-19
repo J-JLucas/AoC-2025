@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 
 // % cpp doesn't handle negatives
 // like you expect python would lol
@@ -6,11 +8,30 @@ int modulo(int a, int b) { return (a % b + b) % b; }
 
 int main(int argc, char *argv[]) {
 
-  int test = (0 - 1) % 100;
-  std::cout << test << std::endl;
+  int dial_pointer = 50;
+  int dial_range = 100;
+  int counter = 0;
+  std::string line;
 
-  int test2 = modulo((0 - 1), 100);
-  std::cout << test2 << std::endl;
+  while (std::getline(std::cin, line)) {
+    std::istringstream iss(line);
+
+    char c;
+    int dist = 0;
+
+    iss >> c >> dist;
+
+    // go backwards if L, forwards if R
+    int dir = (c == 'L') ? -1 : 1;
+
+    dial_pointer = modulo(dial_pointer + (dir * dist), dial_range);
+
+    if (dial_pointer == 0) {
+      counter++;
+    }
+  }
+
+  std::cout << counter << std::endl;
 
   return 0;
 }
